@@ -19,7 +19,7 @@ logging.info("成功读取Excel文件，开始生成单个文档")
 # 逐个生成单个文档
 for i in range(len(ls_hang)):
     try:
-        school, year, month, money, due_day = ls_hang[i]
+        xuhao,school, year, month, money, due_day = ls_hang[i]
         formatted_date = due_day.strftime("%Y-%m-%d")
         ls_str = formatted_date.split('-')
         formatted_date = ls_str[0] + '年' + ls_str[1] + '月' + ls_str[2] + '日'

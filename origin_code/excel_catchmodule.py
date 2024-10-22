@@ -7,7 +7,7 @@ def excelcatch():
     ls_school = []
     for row in ws.iter_rows(min_row=2, values_only=True):
         ls_hang.append(row)
-        school,year,month,money,due_day = row
+        xuhao,school,year,month,money,due_day = row
         ls_school.append(school)
     return ls_hang,ls_school
 
