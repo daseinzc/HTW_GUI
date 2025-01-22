@@ -1,0 +1,105 @@
+2025-01-22 11:53:20,127 - INFO - 开始读取Excel文件
+2025-01-22 11:53:20,127 - INFO - 当前工作路径：D:\HTW_GUI_conduction\HSGUI\extension\TTGC\_internal
+2025-01-22 11:53:20,127 - INFO - 尝试读取文件路径：D:\HTW_GUI_conduction\HSGUI\extension\TTGC\_internal\..\..\..\input\data.xlsx
+2025-01-22 11:53:20,133 - INFO - 成功读取Excel文件，读取到 45 行数据
+2025-01-22 11:53:20,133 - INFO - 开始生成单个文档
+2025-01-22 11:53:20,150 - INFO - 成功生成文档：1 - 社会学院
+2025-01-22 11:53:20,167 - INFO - 成功生成文档：2 - 网络空间安全学院
+2025-01-22 11:53:20,184 - INFO - 成功生成文档：3 - 光学与电子信息学院
+2025-01-22 11:53:20,211 - INFO - 成功生成文档：4 - 人文学院
+2025-01-22 11:53:20,228 - INFO - 成功生成文档：5 - 未来技术学院
+2025-01-22 11:53:20,246 - INFO - 成功生成文档：6 - 机械科学与工程学院
+2025-01-22 11:53:20,264 - INFO - 成功生成文档：7 - 土木与水利工程学院
+2025-01-22 11:53:20,282 - INFO - 成功生成文档：8 - 马克思主义学院
+2025-01-22 11:53:20,309 - INFO - 成功生成文档：9 - 口腔医学院
+2025-01-22 11:53:20,327 - INFO - 成功生成文档：10 - 能源与动力工程学院
+2025-01-22 11:53:20,344 - INFO - 成功生成文档：11 - 外国语学院
+2025-01-22 11:53:20,362 - INFO - 成功生成文档：12 - 护理学院
+2025-01-22 11:53:20,379 - INFO - 成功生成文档：13 - 化学与化工学院
+2025-01-22 11:53:20,396 - INFO - 成功生成文档：14 - 新闻与信息传播学院
+2025-01-22 11:53:20,431 - INFO - 成功生成文档：15 - 生命科学与技术学院
+2025-01-22 11:53:20,448 - INFO - 成功生成文档：16 - 电子信息与通信学院
+2025-01-22 11:53:20,465 - INFO - 成功生成文档：17 - 法学院
+2025-01-22 11:53:20,482 - INFO - 成功生成文档：18 - 哲学学院
+2025-01-22 11:53:20,499 - INFO - 成功生成文档：19 - 航空航天学院
+2025-01-22 11:53:20,516 - INFO - 成功生成文档：20 - 人工智能与自动化学院
+2025-01-22 11:53:20,545 - INFO - 成功生成文档：21 - 医药卫生管理学院
+2025-01-22 11:53:20,563 - INFO - 成功生成文档：22 - 物理学院
+2025-01-22 11:53:20,580 - INFO - 成功生成文档：23 - 管理学院
+2025-01-22 11:53:20,597 - INFO - 成功生成文档：24 - 环境科学与工程学院
+2025-01-22 11:53:20,614 - INFO - 成功生成文档：25 - 公共管理学院
+2025-01-22 11:53:20,631 - INFO - 成功生成文档：26 - 第一临床学院
+2025-01-22 11:53:20,660 - INFO - 成功生成文档：27 - 计算机科学与技术学院
+2025-01-22 11:53:20,678 - INFO - 成功生成文档：28 - 艺术学院
+2025-01-22 11:53:20,694 - INFO - 成功生成文档：29 - 法医学系
+2025-01-22 11:53:20,710 - INFO - 成功生成文档：30 - 数学与统计学院
+2025-01-22 11:53:20,727 - INFO - 成功生成文档：31 - 第二临床学院
+2025-01-22 11:53:20,756 - INFO - 成功生成文档：32 - 电气与电子工程学院
+2025-01-22 11:53:20,773 - INFO - 成功生成文档：33 - 经济学院
+2025-01-22 11:53:20,790 - INFO - 成功生成文档：34 - 集成电路学院
+2025-01-22 11:53:20,807 - INFO - 成功生成文档：35 - 药学院
+2025-01-22 11:53:20,823 - INFO - 成功生成文档：36 - 公共卫生学院
+2025-01-22 11:53:20,840 - INFO - 成功生成文档：37 - 基础医学院
+2025-01-22 11:53:20,869 - INFO - 成功生成文档：38 - 材料科学与工程学院
+2025-01-22 11:53:20,886 - INFO - 成功生成文档：39 - 建筑与城市规划学院
+2025-01-22 11:53:20,902 - INFO - 成功生成文档：40 - 船舶与海洋工程学院
+2025-01-22 11:53:20,919 - INFO - 成功生成文档：41 - 武汉光电国家研究中心
+2025-01-22 11:53:20,935 - INFO - 成功生成文档：42 - 体育学院
+2025-01-22 11:53:20,952 - INFO - 成功生成文档：43 - 教育科学研究院
+2025-01-22 11:53:20,980 - INFO - 成功生成文档：44 - 生殖健康研究所
+2025-01-22 11:53:20,997 - INFO - 成功生成文档：45 - 软件学院
+2025-01-22 11:53:20,997 - INFO - 开始合并文档
+2025-01-22 11:53:20,997 - INFO - 合并文档开始
+2025-01-22 11:53:20,997 - INFO - 当前工作路径：D:\HTW_GUI_conduction\HSGUI\extension\TTGC\_internal
+2025-01-22 11:53:20,997 - INFO - 输入文件夹路径：D:\HTW_GUI_conduction\HSGUI\input\word_data
+2025-01-22 11:53:20,997 - INFO - 输出文件夹路径：D:\HTW_GUI_conduction\HSGUI\output
+2025-01-22 11:53:20,997 - INFO - 输出文件路径：D:\HTW_GUI_conduction\HSGUI\output\三联表.docx
+2025-01-22 11:53:21,004 - INFO - 当前工作目录: D:\HTW_GUI_conduction\HSGUI\extension\TTGC
+2025-01-22 11:53:21,004 - INFO - 找到 custom.xml 文件: D:\HTW_GUI_conduction\HSGUI\extension\TTGC\docxcompose/templates/custom.xml
+2025-01-22 11:53:21,025 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\2网络空间安全学院.docx
+2025-01-22 11:53:21,048 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\3光学与电子信息学院.docx
+2025-01-22 11:53:21,070 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\4人文学院.docx
+2025-01-22 11:53:21,089 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\5未来技术学院.docx
+2025-01-22 11:53:21,110 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\6机械科学与工程学院.docx
+2025-01-22 11:53:21,132 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\7土木与水利工程学院.docx
+2025-01-22 11:53:21,152 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\8马克思主义学院.docx
+2025-01-22 11:53:21,185 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\9口腔医学院.docx
+2025-01-22 11:53:21,205 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\10能源与动力工程学院.docx
+2025-01-22 11:53:21,226 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\11外国语学院.docx
+2025-01-22 11:53:21,246 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\12护理学院.docx
+2025-01-22 11:53:21,267 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\13化学与化工学院.docx
+2025-01-22 11:53:21,288 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\14新闻与信息传播学院.docx
+2025-01-22 11:53:21,320 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\15生命科学与技术学院.docx
+2025-01-22 11:53:21,340 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\16电子信息与通信学院.docx
+2025-01-22 11:53:21,361 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\17法学院.docx
+2025-01-22 11:53:21,381 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\18哲学学院.docx
+2025-01-22 11:53:21,402 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\19航空航天学院.docx
+2025-01-22 11:53:21,422 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\20人工智能与自动化学院.docx
+2025-01-22 11:53:21,454 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\21医药卫生管理学院.docx
+2025-01-22 11:53:21,474 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\22物理学院.docx
+2025-01-22 11:53:21,495 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\23管理学院.docx
+2025-01-22 11:53:21,516 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\24环境科学与工程学院.docx
+2025-01-22 11:53:21,536 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\25公共管理学院.docx
+2025-01-22 11:53:21,558 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\26第一临床学院.docx
+2025-01-22 11:53:21,590 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\27计算机科学与技术学院.docx
+2025-01-22 11:53:21,611 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\28艺术学院.docx
+2025-01-22 11:53:21,632 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\29法医学系.docx
+2025-01-22 11:53:21,653 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\30数学与统计学院.docx
+2025-01-22 11:53:21,674 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\31第二临床学院.docx
+2025-01-22 11:53:21,696 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\32电气与电子工程学院.docx
+2025-01-22 11:53:21,728 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\33经济学院.docx
+2025-01-22 11:53:21,749 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\34集成电路学院.docx
+2025-01-22 11:53:21,771 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\35药学院.docx
+2025-01-22 11:53:21,793 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\36公共卫生学院.docx
+2025-01-22 11:53:21,814 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\37基础医学院.docx
+2025-01-22 11:53:21,837 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\38材料科学与工程学院.docx
+2025-01-22 11:53:21,893 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\39建筑与城市规划学院.docx
+2025-01-22 11:53:21,914 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\40船舶与海洋工程学院.docx
+2025-01-22 11:53:21,936 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\41武汉光电国家研究中心.docx
+2025-01-22 11:53:21,957 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\42体育学院.docx
+2025-01-22 11:53:21,977 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\43教育科学研究院.docx
+2025-01-22 11:53:21,999 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\44生殖健康研究所.docx
+2025-01-22 11:53:22,047 - INFO - 成功合并文件: D:\HTW_GUI_conduction\HSGUI\input\word_data\45软件学院.docx
+2025-01-22 11:53:22,057 - INFO - 文档已成功保存到: D:\HTW_GUI_conduction\HSGUI\output\三联表.docx
+2025-01-22 11:53:22,057 - INFO - 合并文档结束
+2025-01-22 11:53:22,057 - INFO - 文档生成和合并完成
