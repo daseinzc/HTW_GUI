@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import (
     QPushButton, QWidget, QHBoxLayout, QAbstractItemView, QFileDialog, QMessageBox,
     QLineEdit, QStackedWidget, QLabel, QHeaderView, QAction
 )
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QIcon, QFont
 from qt_material import apply_stylesheet
 import pandas as pd
@@ -14,50 +14,135 @@ from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
 from plugin_page import PluginPage  # 导入 PluginPage 类
 
+# 自定义支持数字排序
+class NumericTableWidgetItem(QTableWidgetItem):
+    def __lt__(self, other):
+        try:
+            self_val = float(self.text())
+        except ValueError:
+            self_val = 0.0
+        try:
+            other_val = float(other.text())
+        except ValueError:
+            other_val = 0.0
+        return self_val < other_val
+
 class ModernTableApp(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        # 设置全局字体为 Roboto
-        font = QFont("Roboto", 12)  # 设置字体为 Roboto，大小为 12
-        font.setStyleHint(QFont.SansSerif)  # 设置字体风格为无衬线字体
-        font.setWeight(QFont.Normal)  # 设置字体粗细为普通
-        app.setFont(font)  # 应用全局字体
+        # 1) 全局字体
+        font = QFont("Roboto", 12)
+        font.setStyleHint(QFont.SansSerif)
+        font.setWeight(QFont.Normal)
+        app.setFont(font)
 
         self.setWindowTitle("基团团费整理系统")
         self.setGeometry(100, 100, 1400, 800)
         self.setWindowFlags(Qt.Window | Qt.WindowTitleHint | Qt.WindowMinMaxButtonsHint | Qt.WindowCloseButtonHint)
 
-        # 获取当前脚本所在目录的路径
+        # 设置图标（可选）
         base_path = os.path.dirname(os.path.abspath(__file__))
         icon_path = os.path.join(base_path, "../pic.ico")
-        self.setWindowIcon(QIcon(icon_path))
+        if os.path.exists(icon_path):
+            self.setWindowIcon(QIcon(icon_path))
 
-        # StackWidget布局切换
-        self.stacked_widget = QStackedWidget(self)
-        self.setCentralWidget(self.stacked_widget)
+        # 2) 中央布局：左侧导航(窄) + 右侧StackedWidget
+        central_widget = QWidget()
+        self.setCentralWidget(central_widget)
+        main_layout = QHBoxLayout(central_widget)
+        main_layout.setContentsMargins(0,0,0,0)
 
-        # 创建页面
+        # 左侧导航栏(更窄)
+        self.nav_widget = QWidget()
+        self.nav_widget.setFixedWidth(60)  # 仅容纳图标
+        self.nav_widget.setStyleSheet("""
+            QWidget {
+                background-color: #f5f5f5; 
+                border-right: 1px solid #e0e0e0;
+            }
+        """)
+        self.nav_layout = QVBoxLayout(self.nav_widget)
+        self.nav_layout.setContentsMargins(0,10,0,10)
+        self.nav_layout.setSpacing(10)
+
+        # 右侧 StackedWidget
+        self.stacked_widget = QStackedWidget()
         self.main_page = QWidget(self)
         self.option_page = QWidget(self)
-
-        # 创建插件页时传递 stacked_widget 和 main_page
         self.plugin_page = PluginPage(main_page=self.main_page, stacked_widget=self.stacked_widget)
 
         self.stacked_widget.addWidget(self.main_page)
         self.stacked_widget.addWidget(self.option_page)
-        self.stacked_widget.addWidget(self.plugin_page)  # 将插件页添加到 stacked_widget
-
-        # 设置默认显示的页面为主页面
+        self.stacked_widget.addWidget(self.plugin_page)
         self.stacked_widget.setCurrentWidget(self.main_page)
 
+        main_layout.addWidget(self.nav_widget)
+        main_layout.addWidget(self.stacked_widget)
+
+        # ========== 导航栏按钮(纯图标) ==========
+        # 3) 加载图标(黑色线条),你可用 home_black.svg/settings_black.svg/plugin_black.svg
+        icon_home = QIcon(os.path.join(base_path, "home.svg"))
+        icon_settings = QIcon(os.path.join(base_path, "settings.svg"))
+        icon_plugin = QIcon(os.path.join(base_path, "plugin.svg"))
+
+        self.btn_go_main = QPushButton()
+        self.btn_go_main.setIcon(icon_home)
+        self.btn_go_main.setIconSize(QSize(24,24))
+        self.btn_go_main.setToolTip("首页")
+
+        self.btn_go_option = QPushButton()
+        self.btn_go_option.setIcon(icon_settings)
+        self.btn_go_option.setIconSize(QSize(24,24))
+        self.btn_go_option.setToolTip("选项页")
+
+        self.btn_go_plugin = QPushButton()
+        self.btn_go_plugin.setIcon(icon_plugin)
+        self.btn_go_plugin.setIconSize(QSize(24,24))
+        self.btn_go_plugin.setToolTip("插件管理")
+
+        # 4) QSS: 透明默认背景 + 悬浮/按下显示灰色, 让图标有焦点反馈
+        #    并保持按钮区域小, padding: 8px, 这样鼠标点击范围大些
+        btn_style = """
+            QPushButton {
+                background-color: transparent; 
+                border: none;
+                padding: 8px; 
+                margin: 0px;
+            }
+            QPushButton:hover {
+                background-color: #e0e0e0;
+            }
+            QPushButton:pressed {
+                background-color: #cccccc;
+            }
+            QPushButton:focus {
+                outline: none;
+                border: none;
+            }
+        """
+        for btn in [self.btn_go_main, self.btn_go_option, self.btn_go_plugin]:
+            btn.setStyleSheet(btn_style)
+
+        # 5) 点击事件切换页面
+        self.btn_go_main.clicked.connect(lambda: self.stacked_widget.setCurrentWidget(self.main_page))
+        self.btn_go_option.clicked.connect(lambda: self.stacked_widget.setCurrentWidget(self.option_page))
+        self.btn_go_plugin.clicked.connect(lambda: self.stacked_widget.setCurrentWidget(self.plugin_page))
+
+        # 加入左侧布局
+        self.nav_layout.addWidget(self.btn_go_main)
+        self.nav_layout.addWidget(self.btn_go_option)
+        self.nav_layout.addWidget(self.btn_go_plugin)
+        self.nav_layout.addStretch(1)
+
+        # 初始化三个页面 + 菜单
         self.init_main_page()
         self.init_option_page()
         self.init_menu()
 
     def init_menu(self):
         menubar = self.menuBar()
-        menubar.setStyleSheet("font-size: 16px; background-color: #ffffff; color: #333333;")  # 优化工具栏的 UI 样式
+        menubar.setStyleSheet("font-size: 16px; background-color: #ffffff; color: #333333;")
         file_menu = menubar.addMenu("文件")
 
         save_action = QAction("保存进度", self)
@@ -68,16 +153,6 @@ class ModernTableApp(QMainWindow):
         load_action.triggered.connect(self.load_progress)
         file_menu.addAction(load_action)
 
-        # 添加插件管理的菜单项
-        plugin_action = QAction("插件管理", self)
-        plugin_action.triggered.connect(self.switch_to_plugin_page)  # 点击后切换到插件页
-        file_menu.addAction(plugin_action)
-
-
-    def switch_to_plugin_page(self):
-        """切换到插件页"""
-        self.stacked_widget.setCurrentWidget(self.plugin_page)  # 切换到插件页
-
     def init_main_page(self):
         self.table = QTableWidget(0, 4)
         self.table.setHorizontalHeaderLabels(["序号", "学院", "财务金额", "是否补交"])
@@ -87,7 +162,7 @@ class ModernTableApp(QMainWindow):
         self.table.horizontalHeader().setStretchLastSection(True)
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
-        # 填充学院列表
+        # 填充学院数据
         self.schools = [
             "社会学院", "网络空间安全学院", "光学与电子信息学院", "人文学院", "未来技术学院", "机械科学与工程学院",
             "土木与水利工程学院", "马克思主义学院", "口腔医学院", "能源与动力工程学院", "外国语学院", "护理学院",
@@ -98,27 +173,25 @@ class ModernTableApp(QMainWindow):
             "材料科学与工程学院", "建筑与城市规划学院", "船舶与海洋工程学院", "武汉光电国家研究中心", "体育学院",
             "教育科学研究院", "生殖健康研究所", "软件学院"
         ]
-
-        # 初始化表格内容
         for i, school in enumerate(self.schools):
             self.table.insertRow(i)
-            self.table.setItem(i, 0, QTableWidgetItem(str(i + 1)))
+            seq_item = NumericTableWidgetItem(str(i + 1))
+            self.table.setItem(i, 0, seq_item)
             self.table.setItem(i, 1, QTableWidgetItem(school))
             self.table.setItem(i, 2, QTableWidgetItem(""))
             self.table.setItem(i, 3, QTableWidgetItem(""))
 
-        # Material Design 按钮
+        # 底部按钮
         self.add_row_btn = self.create_button("添加行", "#4caf50")
         self.del_row_btn = self.create_button("删除行", "#e57373")
         self.sort_btn = self.create_button("按序号排序", "#64b5f6")
         self.output_btn = self.create_button("输出为Excel", "#81c784")
 
-        # 布局设置
-        button_layout = QHBoxLayout()
-        button_layout.addWidget(self.add_row_btn)
-        button_layout.addWidget(self.del_row_btn)
-        button_layout.addWidget(self.sort_btn)
-        button_layout.addWidget(self.output_btn)
+        btn_layout = QHBoxLayout()
+        btn_layout.addWidget(self.add_row_btn)
+        btn_layout.addWidget(self.del_row_btn)
+        btn_layout.addWidget(self.sort_btn)
+        btn_layout.addWidget(self.output_btn)
 
         main_layout = QVBoxLayout(self.main_page)
         header_label = QLabel("基团团费整理系统", self)
@@ -126,23 +199,13 @@ class ModernTableApp(QMainWindow):
         header_label.setAlignment(Qt.AlignCenter)
         main_layout.addWidget(header_label)
         main_layout.addWidget(self.table)
-        main_layout.addLayout(button_layout)
+        main_layout.addLayout(btn_layout)
 
-        # Option 页面切换按钮
-        self.switch_to_option_btn = self.create_button("切换到选项页", "#ffb74d")
-        self.switch_to_option_btn.clicked.connect(self.switch_to_option_page)
-        main_layout.addWidget(self.switch_to_option_btn)
-
-        # 连接按钮功能
+        # 信号
         self.add_row_btn.clicked.connect(self.add_row)
         self.del_row_btn.clicked.connect(self.delete_row)
         self.sort_btn.clicked.connect(self.sort_by_index)
         self.output_btn.clicked.connect(self.output_to_excel)
-
-    def create_button(self, text, color):
-        button = QPushButton(text)
-        button.setStyleSheet(f"background-color: {color}; color: white; padding: 10px; font-size: 16px;")
-        return button
 
     def init_option_page(self):
         self.year_input = QLineEdit(self)
@@ -167,62 +230,50 @@ class ModernTableApp(QMainWindow):
         input_layout.addWidget(self.year_input)
         input_layout.addWidget(self.month_input)
         input_layout.addWidget(self.day_input)
-
         option_layout.addLayout(input_layout)
 
-        self.switch_to_main_btn = self.create_button("切换到主页面", "#ffb74d")
-        self.switch_to_main_btn.clicked.connect(self.switch_to_main_page)
-        option_layout.addWidget(self.switch_to_main_btn, alignment=Qt.AlignCenter)
+    def create_button(self, text, color):
+        btn = QPushButton(text)
+        btn.setStyleSheet(f"background-color: {color}; color: white; padding: 10px; font-size: 16px;")
+        return btn
 
-    def switch_to_option_page(self):
-        """切换到选项页面"""
-        self.stacked_widget.setCurrentWidget(self.option_page)
-
-    def switch_to_main_page(self):
-        """切换到主页面"""
-        print("切换到主页面")  # 添加打印日志
-        self.stacked_widget.setCurrentWidget(self.main_page)
+    # ============ 业务逻辑 ============
 
     def add_row(self):
         current_row = self.table.currentRow()
         if current_row == -1:
             current_row = self.table.rowCount()
         self.table.insertRow(current_row)
-        self.table.setItem(current_row, 0, QTableWidgetItem(str(current_row + 1)))
+        seq_item = NumericTableWidgetItem(str(current_row + 1))
+        self.table.setItem(current_row, 0, seq_item)
         self.table.setItem(current_row, 1, QTableWidgetItem(""))
         self.table.setItem(current_row, 2, QTableWidgetItem(""))
         self.table.setItem(current_row, 3, QTableWidgetItem(""))
-        self.update_row_numbers()
 
     def delete_row(self):
         current_row = self.table.currentRow()
         if current_row >= 0:
             self.table.removeRow(current_row)
-            self.update_row_numbers()
         else:
             QMessageBox.warning(self, "警告", "请选择要删除的行！")
 
     def sort_by_index(self):
         self.table.sortItems(0, Qt.AscendingOrder)
-        self.update_row_numbers()
 
     def output_to_excel(self):
-        # Excel 导出逻辑，包括覆盖“团费月份”的逻辑
         row_count = self.table.rowCount()
         data = []
         for row in range(row_count):
             row_data = []
-            for col in range(3):  # 获取主页面的前三列数据
+            for col in range(3):
                 item = self.table.item(row, col)
                 cell_text = item.text() if item else ""
                 row_data.append(cell_text)
 
-            # 获取选项页中的数据
             month_value = self.month_input.text()
             year_value = self.year_input.text()
             day_value = self.day_input.text()
 
-            # 如果“是否补交”列包含“补”，则覆盖团费月份
             supplement_item = self.table.item(row, 3)
             if supplement_item and "补" in supplement_item.text():
                 month_value = supplement_item.text()
@@ -230,11 +281,10 @@ class ModernTableApp(QMainWindow):
             row_data.extend([month_value, year_value, day_value])
             data.append(row_data)
 
-        # 设置保存路径和文件名
         base_path = os.path.dirname(os.path.abspath(__file__))
         save_dir = os.path.join(base_path, "../input")
         if not os.path.exists(save_dir):
-            os.makedirs(save_dir)  # 如果文件夹不存在，创建它
+            os.makedirs(save_dir)
 
         file_path = os.path.join(save_dir, "data.xlsx")
 
@@ -243,7 +293,6 @@ class ModernTableApp(QMainWindow):
             df = pd.DataFrame(data, columns=columns)
             df.to_excel(file_path, index=False)
 
-            # 调整单元格列宽自适应内容
             workbook = load_workbook(file_path)
             worksheet = workbook.active
             for column in worksheet.columns:
@@ -254,7 +303,7 @@ class ModernTableApp(QMainWindow):
                         max_length = max(max_length, len(str(cell.value)))
                     except:
                         pass
-                adjusted_width = (max_length + 2) * 1.2  # 增加宽度调整系数，确保所有内容适应单元格
+                adjusted_width = (max_length + 2) * 1.2
                 worksheet.column_dimensions[column_letter].width = adjusted_width
             workbook.save(file_path)
 
@@ -263,7 +312,6 @@ class ModernTableApp(QMainWindow):
             QMessageBox.critical(self, "错误", f"保存文件时发生错误: {str(e)}")
 
     def save_progress(self):
-        # 保存进度到 JSON 文件
         row_count = self.table.rowCount()
         data = []
         for row in range(row_count):
@@ -287,7 +335,6 @@ class ModernTableApp(QMainWindow):
 
         options = QFileDialog.Options()
         file_path, _ = QFileDialog.getSaveFileName(self, "保存进度", "", "JSON 文件 (*.json)", options=options)
-
         if file_path:
             try:
                 with open(file_path, 'w', encoding='utf-8') as f:
@@ -297,10 +344,8 @@ class ModernTableApp(QMainWindow):
                 QMessageBox.critical(self, "错误", f"保存进度时发生错误: {str(e)}")
 
     def load_progress(self):
-        # 从 JSON 文件加载进度
         options = QFileDialog.Options()
         file_path, _ = QFileDialog.getOpenFileName(self, "导入进度", "", "JSON 文件 (*.json)", options=options)
-
         if file_path:
             try:
                 with open(file_path, 'r', encoding='utf-8') as f:
@@ -310,8 +355,11 @@ class ModernTableApp(QMainWindow):
                 for row_data in load_data["table_data"]:
                     current_row = self.table.rowCount()
                     self.table.insertRow(current_row)
-                    for col, cell_text in enumerate(row_data):
-                        self.table.setItem(current_row, col, QTableWidgetItem(cell_text))
+
+                    numeric_item = NumericTableWidgetItem(row_data[0])
+                    self.table.setItem(current_row, 0, numeric_item)
+                    for col in range(1, 4):
+                        self.table.setItem(current_row, col, QTableWidgetItem(row_data[col]))
 
                 self.year_input.setText(load_data["options_data"]["year"])
                 self.month_input.setText(load_data["options_data"]["month"])
@@ -323,11 +371,12 @@ class ModernTableApp(QMainWindow):
 
     def update_row_numbers(self):
         for row in range(self.table.rowCount()):
-            self.table.setItem(row, 0, QTableWidgetItem(str(row + 1)))
+            self.table.setItem(row, 0, NumericTableWidgetItem(str(row + 1)))
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    # 浅色主题(light_blue.xml), 若要暗色可换 'dark_teal.xml' 或其它
     apply_stylesheet(app, theme='light_blue.xml')
 
     window = ModernTableApp()
